@@ -1,19 +1,35 @@
-// Function to complete.
-function CountDownTimer(dateTime, divId) {
-    var end     = new Date(dateTime);
-    var _second = 1000;
-    var _minute = _second * 60;
-    var _hour   = _minute * 60;
-    var _day    = _hour * 24;
+
+function CountDownTimer(dateTime, id) {
+    var end       = new Date(dateTime);
+    var _second   = 1000;
+    var _minute   = _second * 60;
+    var _hour     = _minute * 60;
+    var _day      = _hour * 24;
     var timer;
-
+    
     function showRemaining() {
-       // ... 
-    }
+        var now = new Date();
+        var distance = end - now;
 
-    timer = setInterval(showRemaining(), 1000);
+        if (distance < 0) {   
+            clearInterval(timer);
+            document.getElementById(id).innerHTML = 'EXPIRED!';
+            return;
+        }
+
+        var days = Math.floor(distance / _day);
+        var hours = Math.floor((distance % _day) / _hour);
+        var minutes = Math.floor((distance % _hour) / _minute);
+        var seconds = Math.floor((distance % _minute) / _second);
+        
+        document.getElementById(id).innerHTML = ' GroundHog&#39;s Day will be in: ' + '<br />' + days + ' days ';
+        document.getElementById(id).innerHTML += hours + ' hours ';
+        document.getElementById(id).innerHTML += minutes + ' mins ';
+        document.getElementById(id).innerHTML += seconds + ' secs';
+    };
+    
+    timer = setInterval(showRemaining, 1000);
 }
 
-// Enter the date and time as a string in the following format.  Second parameter is the HTML id of element where you want
-//    the countdown to appear.
-CountDownTimer('02/02/2015 12:00 AM', 'countDown');
+CountDownTimer('February 02, 2015 12:00:00', 'countdown');
+
